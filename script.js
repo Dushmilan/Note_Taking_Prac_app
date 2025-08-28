@@ -47,12 +47,37 @@ function renderNotes() {
         <div class="note-file">
             <h2>${note.titleText}</h2>
             <div class="button-group">
-                <button id="editBtn" class="edit-btn"><img src="edit.svg" alt="edit-icon"></button>
-                <button id="deleteBtn" class="edit-btn"><img src="delete.svg" alt="delete-icon"></button>
+                <button id="editBtn" class="edit-btn"><img src="public/edit.svg" alt="edit-icon"></button>
+                <button id="deleteBtn" class="edit-btn"><img src="public/delete.svg" alt="delete-icon"></button>
             </div>
         </div>
         `).join('');
 }
+
+
+
+
+// Bold Function
+const boldBtn = document.getElementById('boldBtn');
+boldBtn.addEventListener('click', () => {
+  const note = document.getElementById('note');
+  note.style.fontWeight = note.style.fontWeight === 'bold' ? 'normal' : 'bold';
+});
+
+// Italic Function
+const italicBtn = document.getElementById('italicBtn');
+italicBtn.addEventListener('click', () => {
+  const note = document.getElementById('note');
+  note.style.fontStyle = note.style.fontStyle === 'italic' ? 'normal' : 'italic';
+});
+
+// Underline Function
+const underlineBtn = document.getElementById('underlineBtn');
+underlineBtn.addEventListener('click', () => {
+  const note = document.getElementById('note');
+  note.style.textDecoration = note.style.textDecoration === 'underline' ? 'none' : 'underline';
+});
+
 
 // EVENT LISTENERS
 noteTitleInput.focus();
