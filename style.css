@@ -336,3 +336,311 @@ h2 {
         font-size: 13px;
     }
 }
+
+/* ================= EDIT FORM ================= */
+#editForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1000;
+    animation: fadeInScale 0.3s ease-out;
+}
+
+#editForm::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: -1;
+}
+
+#editForm input,
+#editForm textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    font-family: var(--nunito-font);
+    font-size: 1rem;
+    color: var(--text-color);
+    resize: none;
+    transition: var(--transition);
+    outline: none;
+    margin-bottom: 1rem;
+}
+
+#editForm input::placeholder,
+#editForm textarea::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+#editForm input:focus,
+#editForm textarea:focus {
+    border-color: var(--tertiary-color);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(200, 172, 214, 0.2);
+}
+
+#editTitle {
+    min-height: 3rem;
+}
+
+#editNote {
+    min-height: 150px;
+    resize: vertical;
+}
+
+#editForm button {
+    background-color: rgba(77, 72, 134, 0.57);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--nunito-font);
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#editForm button:hover {
+    background-color: rgba(111, 105, 172, 0.7);
+    box-shadow: 0 0 0 2px rgba(200, 172, 214, 0.2);
+}
+
+#editForm button:active {
+    transform: scale(0.95);
+}
+
+#editForm button[type="submit"] {
+    background-color: var(--secondary-color);
+}
+
+#editForm button[type="submit"]:hover {
+    background-color: var(--tertiary-color);
+    color: var(--bg-color);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* ================= EDIT FORM RESPONSIVE ================= */
+@media (max-width: 768px) {
+    #editForm {
+        width: 95%;
+        padding: 1.5rem;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    #editForm {
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    
+    #editForm input,
+    #editForm textarea {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    #editNote {
+        min-height: 120px;
+    }
+}
+
+/* ================= VIEW NOTE MODAL ================= */
+#viewModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.view-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow: hidden;
+    animation: slideInScale 0.3s ease-out;
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.view-header h3 {
+    font-family: var(--nunito-font);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+    word-break: break-word;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50%;
+    transition: var(--transition);
+    line-height: 1;
+    opacity: 0.7;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.view-body {
+    padding: 2rem;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.view-body p {
+    font-family: var(--nunito-font);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    text-align: left;
+    opacity: 1;
+    font-style: normal;
+}
+
+.view-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.view-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.view-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.view-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ================= VIEW MODAL RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .view-content {
+        width: 95%;
+        max-height: 85vh;
+    }
+    
+    .view-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .view-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .view-body {
+        padding: 1.5rem;
+        max-height: 65vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .view-content {
+        border-radius: 8px;
+        max-height: 90vh;
+    }
+    
+    .view-header {
+        padding: 1rem;
+    }
+    
+    .view-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .view-body {
+        padding: 1rem;
+        max-height: 70vh;
+    }
+    
+    .view-body p {
+        font-size: 0.95rem;
+    }
+}

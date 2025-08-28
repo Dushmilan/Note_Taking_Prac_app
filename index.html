@@ -36,6 +36,28 @@
         </main>
     </div>
 
+    <!-- View Note Modal -->
+    <div id="viewModal" style="display: none;">
+        <div class="view-content">
+            <div class="view-header">
+                <h3 id="viewTitle"></h3>
+                <button id="closeViewBtn" class="close-btn">×</button>
+            </div>
+            <div class="view-body">
+                <p id="viewNoteContent"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Form -->
+    <form id="editForm" style="display: none;">
+      <input type="text" id="editTitle" placeholder="Edit Title" required>
+      <textarea id="editNote" placeholder="Edit Note" required></textarea>
+      <button type="submit">Save Changes</button>
+      <button type="button"
+        onclick="document.getElementById('editForm').style.display='none'">Cancel</button>
+    </form>
+
     <script src="script.js"></script>
 </body>
 </html>
