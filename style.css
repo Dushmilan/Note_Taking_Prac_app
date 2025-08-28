@@ -476,6 +476,73 @@ h2 {
     }
 }
 
+/* ================= FLOATING FORMAT TOOLBAR ================= */
+#formatToolbar {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    gap: 0.25rem;
+    animation: fadeInUp 0.2s ease-out;
+}
+
+.format-btn {
+    background: rgba(77, 72, 134, 0.8);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: "DM Serif Display", serif;
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-btn:hover {
+    background: rgba(111, 105, 172, 0.9);
+    box-shadow: 0 0 0 2px rgba(200, 172, 214, 0.3);
+    transform: translateY(-1px);
+}
+
+.format-btn:active {
+    transform: scale(0.95) translateY(0);
+}
+
+.format-btn.active {
+    background: var(--tertiary-color);
+    color: var(--bg-color);
+}
+
+#floatItalicBtn {
+    font-style: italic;
+}
+
+#floatUnderlineBtn {
+    text-decoration: underline;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 /* ================= VIEW NOTE MODAL ================= */
 #viewModal {
     position: fixed;
