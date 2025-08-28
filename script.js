@@ -83,6 +83,7 @@ document.getElementById('viewModal').addEventListener('click', (e) => {
         document.getElementById('viewModal').style.display = 'none';
     }
 });
+
 // Edit Note Function 
 notesPanel.addEventListener('click', (e) => {
     if (e.target.closest('.edit-btn') && e.target.closest('.edit-btn').id === 'editBtn') {
