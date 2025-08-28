@@ -1,0 +1,338 @@
+/* ================= VARIABLES ================= */
+:root {
+    --bg-color: #17153B;
+    --primary-color: #2E236C;
+    --secondary-color: #433D8B;
+    --tertiary-color: #C8ACD6;
+    --text-color: #f5f5f5;
+    --border-radius: 12px;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --transition: all 0.3s ease;
+    --nunito-font: 'Nunito', sans-serif;
+}
+
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--primary-color) 100%);
+    color: var(--text-color);
+    font-family: var(--nunito-font);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+/* ================= LAYOUT ================= */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-family: "sono", sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    color: var(--text-color);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.7;
+}
+
+.note-section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* ================= PANELS ================= */
+.panels {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    box-shadow: var(--shadow);
+    width: 100%;
+    min-width: 300px;
+}
+
+#noteContainer {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+#notesPanel {
+    flex: 0;
+    min-width: 400px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+/* ================= INPUT AREA ================= */
+.input-area {
+    width: 100%;
+    min-height: clamp(200px, 30vh, 300px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    font-family: var(--nunito-font);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: var(--text-color);
+    resize: none;
+    transition: var(--transition);
+    outline: none;
+    margin-bottom: 1rem;
+}
+
+.input-area::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.input-area:focus {
+    border-color: var(--tertiary-color);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(200, 172, 214, 0.2);
+}
+
+#noteTitle {
+    min-height: 3rem;
+    padding: 1rem 1.5rem;
+}
+
+textarea::-webkit-resizer {
+    display: none;
+}
+
+/* ================= TOOLS ================= */
+.tools {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.buttons {
+    background-color: rgba(77, 72, 134, 0.57);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: bold;
+    font-family: "DM Serif Display", serif;
+    min-width: clamp(2.8rem, 8vw, 3.2rem);
+    will-change: transform;
+}
+
+.buttons:hover {
+    background-color: rgba(111, 105, 172, 0.7);
+    box-shadow: 0 0 0 2px rgba(200, 172, 214, 0.2);
+}
+
+.buttons:active {
+    transform: scale(0.95);
+}
+
+#italicBtn {
+    font-style: italic;
+}
+
+#underlineBtn {
+    text-decoration: underline;
+}
+
+#addBtn {
+    font-family: var(--nunito-font);
+    font-weight: bold;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    flex: 1;
+}
+
+/* ================= NOTES PANEL ================= */
+p {
+    margin-top: 1rem;
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+h2 {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.note-file {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    font-family: var(--nunito-font);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: var(--text-color);
+    transition: var(--transition);
+    outline: none;
+    margin-bottom: 1rem;
+    height: 3rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.note-file:last-child {
+    margin-bottom: 0;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    width: 20px;
+    height: 20px;
+    opacity: 0.9;
+}
+
+.edit-btn:hover {
+    opacity: 0.7;
+}
+
+/* ================= SCROLLBAR ================= */
+#notesPanel::-webkit-scrollbar {
+    width: 12px;
+    height: 5px;
+}
+
+#notesPanel::-webkit-scrollbar-track {
+    background: rgba(94, 103, 143, 0);
+    border-radius: 6px;
+}
+
+#notesPanel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+#notesPanel::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.27);
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 1024px) {
+    .app-container {
+        max-width: 900px;
+    }
+    
+    .note-section {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    #noteContainer,
+    #notesPanel {
+        min-width: 100%;
+        flex: none;
+    }
+    
+    #notesPanel {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .app-container {
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+    
+    .panels {
+        min-width: 100%;
+        padding: 1rem;
+    }
+    
+    .tools {
+        gap: 0.3rem;
+        flex-wrap: wrap;
+    }
+    
+    .buttons {
+        min-width: 2.5rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+    
+    .app-container {
+        gap: 1rem;
+    }
+    
+    .panels {
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+    
+    .input-area {
+        min-height: 150px;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    #noteTitle {
+        padding: 0.8rem;
+    }
+    
+    .note-file {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .edit-btn {
+        width: 18px;
+        height: 18px;
+    }
+    
+    h2 {
+        font-size: 13px;
+    }
+}

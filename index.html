@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jotter Note</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sono:wght@200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Jotter Note</h1>
+        </header>
+
+        <main class="note-section">
+            <div id="noteContainer" class="panels">
+                <input type="text" id="noteTitle" class="input-area" placeholder="Enter the title...">
+                <textarea name="note" id="note" class="input-area" placeholder="Jot down something..."></textarea>
+
+                <div class="tools">
+                    <button id="boldBtn" class="buttons">B</button>
+                    <button id="italicBtn" class="buttons">I</button>
+                    <button id="underlineBtn" class="buttons">U</button>
+                    <button id="addBtn" class="buttons">+</button>
+                </div>
+            </div>
+
+            <div id="notesPanel" class="panels" >
+                <p>List is empty</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
