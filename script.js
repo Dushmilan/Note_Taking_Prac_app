@@ -338,8 +338,7 @@ function hasFormattingAtPosition(position, type) {
 
 // Function to update formatting ranges when text is modified
 function updateFormattingRangesOnInput() {
-    // This is a simplified approach - in a full implementation,
-    // you'd want to track text insertions/deletions more precisely
+    
     const selection = getSelectionInfo();
     applyTextareaStyles();
 }
