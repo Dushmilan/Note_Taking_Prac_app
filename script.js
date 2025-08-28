@@ -47,8 +47,8 @@ function renderNotes() {
         <div class="note-file">
             <h2>${note.titleText}</h2>
             <div class="button-group">
-                <button id="editBtn" class="edit-btn"><img src="public/edit.svg" alt="edit-icon"></button>
-                <button id="deleteBtn" class="edit-btn"><img src="public/delete.svg" alt="delete-icon"></button>
+                <button id="editBtn" class="edit-btn"><i class="fa-solid fa-pencil"></i></button>
+                <button id="deleteBtn" class="edit-btn"><i class="fa-solid fa-trash"></i>   </button>
             </div>
         </div>
         `).join('');
