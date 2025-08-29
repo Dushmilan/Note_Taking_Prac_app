@@ -201,6 +201,9 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.note-file.adding {
     animation: slideInFromRight 0.4s ease-out;
 }
 

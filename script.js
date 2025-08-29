@@ -7,6 +7,7 @@ const deleteBtn = document.getElementById('deleteBtn');
 
 // ARRAY TO STORE NOTES
 let notes = [];
+let lastNoteCount = 0;
 
 // ==========================================Note Functionalities==========================================
 // Add Note Function
@@ -32,28 +33,46 @@ function addNote() {
     notes.push(noteObj);
     noteTitleInput.value = "";
     noteInput.value = "";
-    renderNotes();
+    renderNotes(true);
 }
 
 // Render Notes Function
-function renderNotes() {
+function renderNotes(isNewNote = false) {
     if (notes.length === 0) {
         notesPanel.innerHTML = `
             <p>List is empty</p>
         `;
+        lastNoteCount = 0;
         return;
     }
 
-    notesPanel.innerHTML = notes.map(note => `
-        <div class="note-file">
-            <h2>${note.titleText}</h2>
-            <div class="button-group">
-                <button id="viewBtn" class="edit-btn"><i class="fa-solid fa-eye"></i></button>
-                <button id="editBtn" class="edit-btn"><i class="fa-solid fa-pencil"></i></button>
-                <button id="deleteBtn" class="edit-btn"><i class="fa-solid fa-trash"></i></button>
+    notesPanel.innerHTML = notes.map((note, index) => {
+        const isNewlyAdded = isNewNote && index === notes.length - 1;
+        const animationClass = isNewlyAdded ? ' adding' : '';
+        
+        return `
+            <div class="note-file${animationClass}" data-note-id="${note.id}">
+                <h2>${note.titleText}</h2>
+                <div class="button-group">
+                    <button id="viewBtn" class="edit-btn"><i class="fa-solid fa-eye"></i></button>
+                    <button id="editBtn" class="edit-btn"><i class="fa-solid fa-pencil"></i></button>
+                    <button id="deleteBtn" class="edit-btn"><i class="fa-solid fa-trash"></i></button>
+                </div>
             </div>
-        </div>
-        `).join('');
+        `;
+    }).join('');
+    
+    // Remove animation class after animation completes
+    if (isNewNote) {
+        setTimeout(() => {
+            const newNoteElement = notesPanel.querySelector('.note-file.adding');
+            if (newNoteElement) {
+                newNoteElement.classList.remove('adding');
+            }
+        }, 400);
+    }
+    
+    lastNoteCount = notes.length;
 }
 
 // View Note Function
@@ -152,15 +171,15 @@ document.getElementById('cancelEditBtn').addEventListener('click', closeEditForm
 notesPanel.addEventListener('click', (e) => {
     if (e.target.closest('.edit-btn') && e.target.closest('.edit-btn').id === 'deleteBtn') {
         const noteElement = e.target.closest('.note-file');
-        const noteId = noteElement.querySelector('h2').textContent;
+        const noteId = noteElement.getAttribute('data-note-id');
         
         // Add removing animation class
         noteElement.classList.add('removing');
         
         // Remove note from array and re-render after animation
         setTimeout(() => {
-            notes = notes.filter(note => note.titleText !== noteId);
-            renderNotes();
+            notes = notes.filter(note => note.id != noteId);
+            renderNotes(false);
         }, 300);
     }
 });
