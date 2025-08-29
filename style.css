@@ -201,6 +201,11 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    animation: slideInFromRight 0.4s ease-out;
+}
+
+.note-file.removing {
+    animation: slideOutToLeft 0.3s ease-in forwards;
 }
 
 .note-file:last-child {
@@ -223,6 +228,7 @@ h2 {
     width: 20px;
     height: 20px;
     opacity: 0.9;
+    color: var(--text-color);
 }
 
 .edit-btn:hover {
@@ -362,9 +368,10 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(23, 21, 59, 0.8);
     backdrop-filter: blur(3px);
     z-index: -1;
+    border-radius: var(--border-radius);
 }
 
 #editForm input,
@@ -447,6 +454,17 @@ h2 {
     to {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes fadeOutScale {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
     }
 }
 
@@ -684,6 +702,28 @@ h2 {
     to {
         opacity: 0;
         transform: scale(0.8) translateY(20px);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
     }
 }
 

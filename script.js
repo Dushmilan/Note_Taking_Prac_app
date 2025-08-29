@@ -124,18 +124,44 @@ notesPanel.addEventListener('click', (e) => {
                 note.titleText = document.getElementById('editTitle').value;
                 note.noteText = document.getElementById('editNote').value;
                 renderNotes();
-                editForm.style.display = 'none';
+                closeEditForm();
             }
         }
     }
 });
 
+// Function to close edit form with animation
+function closeEditForm() {
+    const editForm = document.getElementById('editForm');
+    
+    // Add closing animation
+    editForm.style.animation = 'fadeOutScale 0.3s ease-out forwards';
+    
+    // Hide form after animation completes
+    setTimeout(() => {
+        editForm.style.display = 'none';
+        // Reset animation for next time
+        editForm.style.animation = '';
+    }, 300);
+}
+
+// Cancel button event listener
+document.getElementById('cancelEditBtn').addEventListener('click', closeEditForm);
+
 // Delete Note Function
 notesPanel.addEventListener('click', (e) => {
     if (e.target.closest('.edit-btn') && e.target.closest('.edit-btn').id === 'deleteBtn') {
-        const noteId = e.target.closest('.note-file').querySelector('h2').textContent;
-        notes = notes.filter(note => note.titleText !== noteId);
-        renderNotes();
+        const noteElement = e.target.closest('.note-file');
+        const noteId = noteElement.querySelector('h2').textContent;
+        
+        // Add removing animation class
+        noteElement.classList.add('removing');
+        
+        // Remove note from array and re-render after animation
+        setTimeout(() => {
+            notes = notes.filter(note => note.titleText !== noteId);
+            renderNotes();
+        }, 300);
     }
 });
 
