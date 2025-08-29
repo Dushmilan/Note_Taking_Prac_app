@@ -8,14 +8,7 @@ const deleteBtn = document.getElementById('deleteBtn');
 // ARRAY TO STORE NOTES
 let notes = [];
 
-
-
-
-
-
-
-
-//                  ==========================================Note Functionalities==========================================
+// ==========================================Note Functionalities==========================================
 // Add Note Function
 function addNote() {
     titleText = noteTitleInput.value.trim();
@@ -42,8 +35,6 @@ function addNote() {
     renderNotes();
 }
 
-
-
 // Render Notes Function
 function renderNotes() {
     if (notes.length === 0) {
@@ -65,8 +56,6 @@ function renderNotes() {
         `).join('');
 }
 
-
-
 // View Note Function
 notesPanel.addEventListener('click', (e) => {
     if (e.target.closest('.edit-btn') && e.target.closest('.edit-btn').id === 'viewBtn') {
@@ -85,17 +74,34 @@ notesPanel.addEventListener('click', (e) => {
     }
 });
 
+// Function to close view modal with animation
+function closeViewModal() {
+    const viewModal = document.getElementById('viewModal');
+    const viewContent = viewModal.querySelector('.view-content');
+    
+    // Add closing animations
+    viewModal.style.animation = 'fadeOut 0.3s ease-out forwards';
+    viewContent.style.animation = 'slideOutScale 0.3s ease-out forwards';
+    
+    // Hide modal after animation completes
+    setTimeout(() => {
+        viewModal.style.display = 'none';
+        // Reset animations for next time
+        viewModal.style.animation = '';
+        viewContent.style.animation = '';
+    }, 300);
+}
+
 // Close view modal
-document.getElementById('closeViewBtn').addEventListener('click', () => {
-    document.getElementById('viewModal').style.display = 'none';
-});
+document.getElementById('closeViewBtn').addEventListener('click', closeViewModal);
 
 // Close view modal when clicking outside
 document.getElementById('viewModal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('viewModal')) {
-        document.getElementById('viewModal').style.display = 'none';
+        closeViewModal();
     }
 });
+
 // Edit Note Function 
 notesPanel.addEventListener('click', (e) => {
     if (e.target.closest('.edit-btn') && e.target.closest('.edit-btn').id === 'editBtn') {
@@ -124,11 +130,6 @@ notesPanel.addEventListener('click', (e) => {
     }
 });
 
-
-
-
-
-
 // Delete Note Function
 notesPanel.addEventListener('click', (e) => {
     if (e.target.closest('.edit-btn') && e.target.closest('.edit-btn').id === 'deleteBtn') {
@@ -138,18 +139,7 @@ notesPanel.addEventListener('click', (e) => {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-//                                 ============================TEXT SELECTION AND FORMATTING FUNCTIONALITY=============================
+// ============================TEXT SELECTION AND FORMATTING FUNCTIONALITY=============================
 // Floating Toolbar Elements
 const formatToolbar = document.getElementById('formatToolbar');
 const noteTextarea = document.getElementById('note');
@@ -168,8 +158,6 @@ function getSelectionInfo() {
         hasSelection: selectedText.length > 0
     };
 }
-
-
 
 // Function to position toolbar near selection
 function positionToolbar() {
@@ -199,9 +187,6 @@ let textFormatting = {
     underline: new Set()
 };
 
-
-
-
 // Function to update button states
 function updateButtonStates() {
     const selection = getSelectionInfo();
@@ -217,8 +202,6 @@ function updateButtonStates() {
     document.getElementById('floatUnderlineBtn').classList.toggle('active', hasUnderline);
 }
 
-
-
 // Function to check if range has formatting
 function hasFormattingInRange(start, end, type) {
     const ranges = textFormatting[type];
@@ -229,8 +212,6 @@ function hasFormattingInRange(start, end, type) {
     }
     return false;
 }
-
-
 
 // Function to apply CSS styling to textarea selection
 function applyFormatting(tag) {
@@ -266,8 +247,6 @@ function applyFormatting(tag) {
     updateButtonStates();
 }
 
-
-
 // Function to remove formatting from range
 function removeFormattingFromRange(start, end, type) {
     const ranges = textFormatting[type];
@@ -281,8 +260,6 @@ function removeFormattingFromRange(start, end, type) {
     
     rangesToRemove.forEach(range => ranges.delete(range));
 }
-
-
 
 // Function to apply styles to textarea based on formatting state
 function applyTextareaStyles() {
@@ -316,8 +293,6 @@ function applyTextareaStyles() {
     noteTextarea.style.cssText += '; ' + styleString;
 }
 
-
-
 // Function to check if position has specific formatting
 function hasFormattingAtPosition(position, type) {
     const ranges = textFormatting[type];
@@ -328,8 +303,6 @@ function hasFormattingAtPosition(position, type) {
     }
     return false;
 }
-
-
 
 // Function to update formatting ranges when text is modified
 function updateFormattingRangesOnInput() {
@@ -346,9 +319,6 @@ noteTextarea.addEventListener('blur', () => {
         }
     }, 200);
 });
-
-
-
 
 // Event listeners for text selection
 noteTextarea.addEventListener('mouseup', () => {
@@ -386,13 +356,6 @@ document.getElementById('floatUnderlineBtn').addEventListener('click', (e) => {
     e.preventDefault();
     applyFormatting('underline');
 });
-
-
-
-
-
-
-
 
 // Event listeners for adding notes and focusing inputs
 noteTitleInput.focus();
