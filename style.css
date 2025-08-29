@@ -84,6 +84,7 @@ h1 {
     min-width: 400px;
     height: 400px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* ================= INPUT AREA ================= */
