@@ -13,7 +13,7 @@ let lastNoteCount = 0;
 // Add Note Function
 function addNote() {
     titleText = noteTitleInput.value.trim();
-    noteText = noteInput.value.trim();
+    noteText = noteInput.textContent.trim();
     
     if (titleText === "") {
         noteTitleInput.setAttribute('placeholder', 'Please enter a title name!');
@@ -32,7 +32,7 @@ function addNote() {
 
     notes.push(noteObj);
     noteTitleInput.value = "";
-    noteInput.value = "";
+    noteInput.textContent = "";
     renderNotes(true);
 }
 
@@ -184,225 +184,101 @@ notesPanel.addEventListener('click', (e) => {
     }
 });
 
-// ============================TEXT SELECTION AND FORMATTING FUNCTIONALITY=============================
-// Floating Toolbar Elements
-const formatToolbar = document.getElementById('formatToolbar');
-const noteTextarea = document.getElementById('note');
-let currentSelection = null;
+// ========================== Styling functionalities =========================
+// Make Bold Function
+function makeBold() {
+    const selection = window.getSelection();
+  
+    if (!selection.rangeCount || selection.isCollapsed) return;
+  
+    const range = selection.getRangeAt(0);
 
-// Function to get selection info
-function getSelectionInfo() {
-    const start = noteTextarea.selectionStart;
-    const end = noteTextarea.selectionEnd;
-    const selectedText = noteTextarea.value.substring(start, end);
-    
-    return {
-        start: start,
-        end: end,
-        text: selectedText,
-        hasSelection: selectedText.length > 0
-    };
-}
+    // Get the parent element of the selection
+    const parent = selection.anchorNode.parentElement;
 
-// Function to position toolbar near selection
-function positionToolbar() {
-    const rect = noteTextarea.getBoundingClientRect();
-    const selection = getSelectionInfo();
-    
-    if (selection.hasSelection) {
-        // Calculate approximate position based on cursor
-        const left = rect.left + 20; // Offset from left edge
-        const top = rect.top - 50; // Position above textarea
-        
-        formatToolbar.style.left = `${left}px`;
-        formatToolbar.style.top = `${top}px`;
-        formatToolbar.style.display = 'flex';
-        
-        // Update button states based on current formatting
-        updateButtonStates();
-    } else {
-        formatToolbar.style.display = 'none';
-    }
-}
+    // Wrap selection in a <strong> element
+    if (parent && parent.tagName === "STRONG") {
+        const strong = parent;
+        const fragment = document.createDocumentFragment();
 
-// Store formatting states for text ranges
-let textFormatting = {
-    bold: new Set(),
-    italic: new Set(),
-    underline: new Set()
-};
-
-// Function to update button states
-function updateButtonStates() {
-    const selection = getSelectionInfo();
-    if (!selection.hasSelection) return;
-    
-    // Check if any part of selection has formatting
-    const hasBold = hasFormattingInRange(selection.start, selection.end, 'bold');
-    const hasItalic = hasFormattingInRange(selection.start, selection.end, 'italic');
-    const hasUnderline = hasFormattingInRange(selection.start, selection.end, 'underline');
-    
-    document.getElementById('floatBoldBtn').classList.toggle('active', hasBold);
-    document.getElementById('floatItalicBtn').classList.toggle('active', hasItalic);
-    document.getElementById('floatUnderlineBtn').classList.toggle('active', hasUnderline);
-}
-
-// Function to check if range has formatting
-function hasFormattingInRange(start, end, type) {
-    const ranges = textFormatting[type];
-    for (let range of ranges) {
-        if (range.start <= start && range.end >= end) {
-            return true;
+        while (strong.firstChild) {
+            fragment.appendChild(strong.firstChild);
         }
-    }
-    return false;
-}
 
-// Function to apply CSS styling to textarea selection
-function applyFormatting(tag) {
-    const selection = getSelectionInfo();
-    if (!selection.hasSelection) return;
-    
-    // Store the formatting range
-    const formatRange = {
-        start: selection.start,
-        end: selection.end,
-        text: selection.text
-    };
-    
-    // Toggle formatting
-    const hasFormatting = hasFormattingInRange(selection.start, selection.end, tag);
-    
-    if (hasFormatting) {
-        // Remove formatting
-        removeFormattingFromRange(selection.start, selection.end, tag);
+        strong.replaceWith(fragment);
     } else {
-        // Add formatting
-        textFormatting[tag].add(formatRange);
+        const strong = document.createElement("strong");
+        range.surroundContents(strong);
     }
-    
-    // Apply visual styling to textarea
-    applyTextareaStyles();
-    
-    // Restore selection
-    noteTextarea.setSelectionRange(selection.start, selection.end);
-    noteTextarea.focus();
-    
-    // Update toolbar
-    updateButtonStates();
+  
+    // Clear selection
+    selection.removeAllRanges();
+    selection.addRange(range);
 }
 
-// Function to remove formatting from range
-function removeFormattingFromRange(start, end, type) {
-    const ranges = textFormatting[type];
-    const rangesToRemove = [];
-    
-    for (let range of ranges) {
-        if (range.start <= end && range.end >= start) {
-            rangesToRemove.push(range);
+// Make Italic Function
+function makeItalic() {
+    const selection = window.getSelection();
+
+    if (!selection.rangeCount || selection.isCollapsed) return;
+
+    const range = selection.getRangeAt(0);
+
+    // Get the parent element of the selection
+    const parent = selection.anchorNode.parentElement;
+
+    // Wrap selection in a <em> element
+    if (parent && parent.tagName === "EM") {
+        const em = parent;
+        const fragment = document.createDocumentFragment();
+
+        while (em.firstChild) {
+            fragment.appendChild(em.firstChild);
         }
+
+        em.replaceWith(fragment);
+    } else {
+        const em = document.createElement("em");
+        range.surroundContents(em);
     }
-    
-    rangesToRemove.forEach(range => ranges.delete(range));
+
+    // Clear selection
+    selection.removeAllRanges();
+    selection.addRange(range);
 }
 
-// Function to apply styles to textarea based on formatting state
-function applyTextareaStyles() {
-    const styles = [];
-    
-    // Check what formatting is active for the current selection or cursor position
-    const selection = getSelectionInfo();
-    const position = selection.hasSelection ? selection.start : noteTextarea.selectionStart;
-    
-    // Apply styles based on active formatting
-    if (hasFormattingAtPosition(position, 'bold')) {
-        styles.push('font-weight: bold');
-    } else {
-        styles.push('font-weight: normal');
-    }
-    
-    if (hasFormattingAtPosition(position, 'italic')) {
-        styles.push('font-style: italic');
-    } else {
-        styles.push('font-style: normal');
-    }
-    
-    if (hasFormattingAtPosition(position, 'underline')) {
-        styles.push('text-decoration: underline');
-    } else {
-        styles.push('text-decoration: none');
-    }
-    
-    // Apply combined styles
-    const styleString = styles.join('; ');
-    noteTextarea.style.cssText += '; ' + styleString;
-}
+// Make Underline Function
+function makeUnderline() {
+    const selection = window.getSelection();
+  
+    if (!selection.rangeCount || selection.isCollapsed) return;
+  
+    const range = selection.getRangeAt(0);
 
-// Function to check if position has specific formatting
-function hasFormattingAtPosition(position, type) {
-    const ranges = textFormatting[type];
-    for (let range of ranges) {
-        if (position >= range.start && position <= range.end) {
-            return true;
+    // Get the parent element of the selection
+    const parent = selection.anchorNode.parentElement;
+
+    // Wrap selection in a <strong> element
+    if (parent && parent.tagName === "U") {
+        const u = parent;
+        const fragment = document.createDocumentFragment();
+
+        while (u.firstChild) {
+            fragment.appendChild(u.firstChild);
         }
+
+        u.replaceWith(fragment);
+    } else {
+        const u = document.createElement("u");
+        range.surroundContents(u);
     }
-    return false;
+  
+    // Clear selection
+    selection.removeAllRanges();
+    selection.addRange(range);
 }
 
-// Function to update formatting ranges when text is modified
-function updateFormattingRangesOnInput() {
-    
-    const selection = getSelectionInfo();
-    applyTextareaStyles();
-}
-
-noteTextarea.addEventListener('blur', () => {
-    // Hide toolbar when textarea loses focus (with delay to allow toolbar clicks)
-    setTimeout(() => {
-        if (!formatToolbar.matches(':hover')) {
-            formatToolbar.style.display = 'none';
-        }
-    }, 200);
-});
-
-// Event listeners for text selection
-noteTextarea.addEventListener('mouseup', () => {
-    setTimeout(() => {
-        positionToolbar();
-        applyTextareaStyles();
-    }, 10); // Small delay to ensure selection is finalized
-});
-
-noteTextarea.addEventListener('keyup', () => {
-    setTimeout(() => {
-        positionToolbar();
-        applyTextareaStyles();
-    }, 10);
-});
-
-noteTextarea.addEventListener('input', () => {
-    // Update formatting ranges when text changes
-    updateFormattingRangesOnInput();
-    applyTextareaStyles();
-});
-
-// Event listeners for formatting buttons
-document.getElementById('floatBoldBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    applyFormatting('bold');
-});
-
-document.getElementById('floatItalicBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    applyFormatting('italic');
-});
-
-document.getElementById('floatUnderlineBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    applyFormatting('underline');
-});
-
-// Event listeners for adding notes and focusing inputs
+// =============== Event listeners for adding notes and focusing inputs ===============
 noteTitleInput.focus();
 
 noteTitleInput.addEventListener('click', () => {

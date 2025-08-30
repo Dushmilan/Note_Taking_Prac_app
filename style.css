@@ -104,12 +104,6 @@ h1 {
     margin-bottom: 1rem;
 }
 
-.input-area::placeholder {
-    color: var(--text-color);
-    opacity: 0.7;
-    font-style: italic;
-}
-
 .input-area:focus {
     border-color: var(--tertiary-color);
     background: rgba(255, 255, 255, 0.12);
@@ -121,8 +115,18 @@ h1 {
     padding: 1rem 1.5rem;
 }
 
-textarea::-webkit-resizer {
-    display: none;
+#noteTitle::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+#note:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-color);
+    opacity: 0.7;
+    font-style: italic;
+    pointer-events: none;
 }
 
 /* ================= TOOLS ================= */
