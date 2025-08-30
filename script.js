@@ -192,28 +192,48 @@ function makeBold() {
     if (!selection.rangeCount || selection.isCollapsed) return;
   
     const range = selection.getRangeAt(0);
-
-    // Get the parent element of the selection
-    const parent = selection.anchorNode.parentElement;
-
-    // Wrap selection in a <strong> element
-    if (parent && parent.tagName === "STRONG") {
-        const strong = parent;
-        const fragment = document.createDocumentFragment();
-
-        while (strong.firstChild) {
-            fragment.appendChild(strong.firstChild);
+    
+    // Check if selection is already bold
+    let strongElement = null;
+    let node = range.commonAncestorContainer;
+    
+    // If it's a text node, check its parent
+    if (node.nodeType === Node.TEXT_NODE) {
+        node = node.parentElement;
+    }
+    
+    // Walk up the DOM tree to find STRONG element
+    while (node && node !== document.body) {
+        if (node.tagName === "STRONG") {
+            strongElement = node;
+            break;
         }
+        node = node.parentElement;
+    }
 
-        strong.replaceWith(fragment);
+    if (strongElement) {
+        // Remove bold formatting
+        const fragment = document.createDocumentFragment();
+        while (strongElement.firstChild) {
+            fragment.appendChild(strongElement.firstChild);
+        }
+        strongElement.replaceWith(fragment);
     } else {
-        const strong = document.createElement("strong");
-        range.surroundContents(strong);
+        // Add bold formatting
+        try {
+            const strong = document.createElement("strong");
+            range.surroundContents(strong);
+        } catch (e) {
+            // Fallback for complex selections
+            const contents = range.extractContents();
+            const strong = document.createElement("strong");
+            strong.appendChild(contents);
+            range.insertNode(strong);
+        }
     }
   
     // Clear selection
     selection.removeAllRanges();
-    selection.addRange(range);
 }
 
 // Make Italic Function
@@ -223,28 +243,48 @@ function makeItalic() {
     if (!selection.rangeCount || selection.isCollapsed) return;
 
     const range = selection.getRangeAt(0);
-
-    // Get the parent element of the selection
-    const parent = selection.anchorNode.parentElement;
-
-    // Wrap selection in a <em> element
-    if (parent && parent.tagName === "EM") {
-        const em = parent;
-        const fragment = document.createDocumentFragment();
-
-        while (em.firstChild) {
-            fragment.appendChild(em.firstChild);
+    
+    // Check if selection is already italic
+    let emElement = null;
+    let node = range.commonAncestorContainer;
+    
+    // If it's a text node, check its parent
+    if (node.nodeType === Node.TEXT_NODE) {
+        node = node.parentElement;
+    }
+    
+    // Walk up the DOM tree to find EM element
+    while (node && node !== document.body) {
+        if (node.tagName === "EM") {
+            emElement = node;
+            break;
         }
+        node = node.parentElement;
+    }
 
-        em.replaceWith(fragment);
+    if (emElement) {
+        // Remove italic formatting
+        const fragment = document.createDocumentFragment();
+        while (emElement.firstChild) {
+            fragment.appendChild(emElement.firstChild);
+        }
+        emElement.replaceWith(fragment);
     } else {
-        const em = document.createElement("em");
-        range.surroundContents(em);
+        // Add italic formatting
+        try {
+            const em = document.createElement("em");
+            range.surroundContents(em);
+        } catch (e) {
+            // Fallback for complex selections
+            const contents = range.extractContents();
+            const em = document.createElement("em");
+            em.appendChild(contents);
+            range.insertNode(em);
+        }
     }
 
     // Clear selection
     selection.removeAllRanges();
-    selection.addRange(range);
 }
 
 // Make Underline Function
@@ -254,28 +294,48 @@ function makeUnderline() {
     if (!selection.rangeCount || selection.isCollapsed) return;
   
     const range = selection.getRangeAt(0);
-
-    // Get the parent element of the selection
-    const parent = selection.anchorNode.parentElement;
-
-    // Wrap selection in a <strong> element
-    if (parent && parent.tagName === "U") {
-        const u = parent;
-        const fragment = document.createDocumentFragment();
-
-        while (u.firstChild) {
-            fragment.appendChild(u.firstChild);
+    
+    // Check if selection is already underlined
+    let uElement = null;
+    let node = range.commonAncestorContainer;
+    
+    // If it's a text node, check its parent
+    if (node.nodeType === Node.TEXT_NODE) {
+        node = node.parentElement;
+    }
+    
+    // Walk up the DOM tree to find U element
+    while (node && node !== document.body) {
+        if (node.tagName === "U") {
+            uElement = node;
+            break;
         }
+        node = node.parentElement;
+    }
 
-        u.replaceWith(fragment);
+    if (uElement) {
+        // Remove underline formatting
+        const fragment = document.createDocumentFragment();
+        while (uElement.firstChild) {
+            fragment.appendChild(uElement.firstChild);
+        }
+        uElement.replaceWith(fragment);
     } else {
-        const u = document.createElement("u");
-        range.surroundContents(u);
+        // Add underline formatting
+        try {
+            const u = document.createElement("u");
+            range.surroundContents(u);
+        } catch (e) {
+            // Fallback for complex selections
+            const contents = range.extractContents();
+            const u = document.createElement("u");
+            u.appendChild(contents);
+            range.insertNode(u);
+        }
     }
   
     // Clear selection
     selection.removeAllRanges();
-    selection.addRange(range);
 }
 
 // =============== Event listeners for adding notes and focusing inputs ===============
