@@ -13,7 +13,7 @@ let lastNoteCount = 0;
 // Add Note Function
 function addNote() {
     titleText = noteTitleInput.value.trim();
-    noteText = noteInput.textContent.trim();
+    noteText = noteInput.innerHTML.trim();
     
     if (titleText === "") {
         noteTitleInput.setAttribute('placeholder', 'Please enter a title name!');
@@ -32,7 +32,7 @@ function addNote() {
 
     notes.push(noteObj);
     noteTitleInput.value = "";
-    noteInput.textContent = "";
+    noteInput.innerHTML = "";
     renderNotes(true);
 }
 
@@ -87,7 +87,7 @@ notesPanel.addEventListener('click', (e) => {
             const viewNoteContent = document.getElementById('viewNoteContent');
             
             viewTitle.textContent = note.titleText;
-            viewNoteContent.textContent = note.noteText;
+            viewNoteContent.innerHTML = note.noteText;
             viewModal.style.display = 'flex';
         }
     }
@@ -135,13 +135,13 @@ notesPanel.addEventListener('click', (e) => {
         
         if (note) {
             document.getElementById('editTitle').value = note.titleText;
-            document.getElementById('editNote').value = note.noteText;
+            document.getElementById('editNote').innerHTML = note.noteText;
             
             // Handle form submission
             editForm.onsubmit = function(event) {
                 event.preventDefault();
                 note.titleText = document.getElementById('editTitle').value;
-                note.noteText = document.getElementById('editNote').value;
+                note.noteText = document.getElementById('editNote').innerHTML;
                 renderNotes();
                 closeEditForm();
             }
