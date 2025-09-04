@@ -54,9 +54,11 @@
     <!-- Edit Form -->
     <form id="editForm" style="display: none;">
       <input type="text" id="editTitle" placeholder="Edit Title" required>
-      <textarea id="editNote" placeholder="Edit Note" required></textarea>
-      <button type="submit">Save Changes</button>
-      <button type="button" id="cancelEditBtn">Cancel</button>
+      <div id="editNote" class="input-area" data-placeholder="Edit Note..." contenteditable="true"></div>
+      <div class="form-buttons">
+        <button type="submit" class="buttons">Save Changes</button>
+        <button type="button" id="cancelEditBtn" class="buttons">Cancel</button>
+      </div>
     </form>
 
     <script src="script.js"></script>

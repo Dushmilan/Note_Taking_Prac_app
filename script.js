@@ -135,13 +135,14 @@ notesPanel.addEventListener('click', (e) => {
         
         if (note) {
             document.getElementById('editTitle').value = note.titleText;
-            document.getElementById('editNote').innerHTML = note.noteText;
+            const editNoteDiv = document.getElementById('editNote');
+            editNoteDiv.innerHTML = note.noteText;
             
             // Handle form submission
             editForm.onsubmit = function(event) {
                 event.preventDefault();
                 note.titleText = document.getElementById('editTitle').value;
-                note.noteText = document.getElementById('editNote').innerHTML;
+                note.noteText = editNoteDiv.innerHTML;
                 renderNotes();
                 closeEditForm();
             }
