@@ -34,6 +34,7 @@ function addNote() {
     noteTitleInput.value = "";
     noteInput.innerHTML = "";
     renderNotes(true);
+    noteTitleInput.focus();
 }
 
 // Render Notes Function
@@ -354,5 +355,17 @@ noteTitleInput.addEventListener('keypress', e => {
         noteInput.focus();
     }
 });
+
+noteTitleInput.addEventListener('keydown', event => {
+    if (event.ctrlKey && event.key === 'Enter') {
+        addNote();
+    }
+})
+
+noteInput.addEventListener('keydown', event => {
+    if (event.ctrlKey && event.key === 'Enter') {
+        addNote();
+    }
+})
 
 addBtn.addEventListener('click', addNote);
